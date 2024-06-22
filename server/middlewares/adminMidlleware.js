@@ -6,6 +6,7 @@ const adminMiddleware = async (req, res, next) => {
   const password = z.string().min(8).parse(req.headers.password);
   const auth = req.headers.authorization;
   const admin = await Admin.findOne({ auth });
+  console.log("form middle");
   if (admin) {
     next();
   } else {
