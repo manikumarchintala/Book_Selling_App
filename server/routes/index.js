@@ -6,6 +6,8 @@ const userMiddleware = require("../middlewares/userMiddleware");
 const Admin = require("../models/Admin");
 const Books = require("../models/Book");
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 // Admin routes
 router.post("/admin/signup", async (req, res) => {
   const { username, password } = req.body;
@@ -27,12 +29,12 @@ router.get("/admin/view", adminMiddleware, async (req, res) => {
 });
 
 router.post("/admin/addbook", adminMiddleware, async (req, res) => {
-  const { title, genre, author, description, imagelink, price } = req.body;
+  const { title, genre, author, descreption, imagelink, price } = req.body;
   const book = await Books.create({
     title,
     genre,
     author,
-    description,
+    descreption,
     imagelink,
     price,
   });
@@ -41,12 +43,21 @@ router.post("/admin/addbook", adminMiddleware, async (req, res) => {
 // User routes
 router.post("/user/signup", async (req, res) => {
   const { username, password } = req.body;
-  await User.create({ username, password });
+  const auth = jwt.sign({ username, password }, process.env.secret);
+  await User.create({ username, password, auth });
   res.json({ message: "User created" });
 });
-router.get("/users/view", userMiddleware, async (req, res) => {
+router.get("/user/view", userMiddleware, async (req, res) => {
+  const username = req.headers.username;
   const books = await Books.find({});
-  res.json({ books });
+  const user = await User.findOne({ username });
+  res.json({
+    books,
+    auth: User.auth,
+    user,
+    status: "ok",
+    message: "Logged in",
+  });
 });
 
 router.post("/books/:bookId", userMiddleware, async (req, res) => {
