@@ -17,7 +17,6 @@ router.post("/admin/signup", async (req, res) => {
 });
 
 router.post("/admin/signin", async (req, res) => {
-  console.log("hjooo");
   const { username, password } = req.body;
   const admin = await Admin.findOne({ username });
   res.json({ auth: Admin.auth });
@@ -46,6 +45,11 @@ router.post("/user/signup", async (req, res) => {
   const auth = jwt.sign({ username, password }, process.env.secret);
   await User.create({ username, password, auth });
   res.json({ message: "User created" });
+});
+router.post("/user/signin", userMiddleware, async (req, res) => {
+  const username = req.headers.username;
+  const user = await User.findOne({ username });
+  res.json({ auth: user.auth, status: "ok", message: "Logged in" });
 });
 router.get("/user/view", userMiddleware, async (req, res) => {
   const username = req.headers.username;
