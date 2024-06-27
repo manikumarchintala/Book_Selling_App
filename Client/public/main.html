@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brook & Books</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <script src="./scripts/main.js"></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <p class="title"><a href="dummy.html">Brook & Books</a></p>
+      <ul>
+        <li>Fiction</li>
+        <li>Kids</li>
+        <li>Toys</li>
+        <li>Horror</li>
+      </ul>
+      <div>
+        <img class="profile" src="./assets/svg/user-circle.svg" alt="userpic" />
+        <div class="Login">
+          <span>Hello : <span class="user"></span></span>
+          <span>How you Doing ?</span>
+          <button id="logout">Log Out</button>
+        </div>
+      </div>
+      <div class="checkout">
+        <img src="./assets/svg/cart.svg" alt="cart" class="checkoutcart" />
+        <div class="checkoutgrid">
+          <div class="checkoutimage">
+            <img src="https://i.ibb.co/MDCzjYR/A-little-life.jpg" alt="dummy" />
+          </div>
+          <div class="checkouttext">
+            <span class="tittle">A Little Life</span>
+          </div>
+          <div class="checkoutprice">
+            <span>11<span>$</span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sort">
+      <select>
+        <option value="price">High to Low</option>
+        <option value="price">Low to High</option>
+        <option value="A to Z">A to Z</option>
+      </select>
+    </div>
+    <main>
+      <div class="maingrid">
+        <div class="sidegrid"></div>
+        <div class="gridcontainer" id="gridcontainer">
+          <!-- <div class="child">
+            <div class="subchildone">
+              <img src="https://i.ibb.co/MDCzjYR/A-little-life.jpg" alt="" />
+            </div>
+            <div class="subchildtwo">
+              <span class="tittle">A Little Life</span>
+              <br />
+              <span class="Author">Author Name</span>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p class="title"><a href="dummy.html">Brook & Books</a></p>
+      <p><a href="dummy.html">Back To Top ⬆</a></p>
+    </footer>
+  </body>
+</html>
