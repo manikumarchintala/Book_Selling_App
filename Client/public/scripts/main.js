@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let username = localStorage.getItem("username");
   let password = localStorage.getItem("password");
 
-  console.log(username, password);
   const jwt = localStorage.getItem("jwt");
   if (jwt == null || username == null || password == null) {
     window.location.href = "./login.html";
@@ -20,6 +19,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   //functionality to display the username
   let userdisplay = document.querySelector(".user");
   userdisplay.innerText = username;
+
+  //functionality for the checkout view section
+
+  let checkout = document.querySelector(".checkoutcart");
+  let checkoutgrid = document.querySelector(".checkoutgrid");
+  checkout.addEventListener("click", () => {
+    checkoutgrid.classList.toggle("visiblecheckout");
+  });
 
   //decalaring options to send the data as a headers to the server with get method
   const options = {
@@ -79,6 +86,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error("error:", error);
   }
+
+  gridcontainer.addEventListener("click", function (event) {
+    // Check if the clicked element has the class "child"
+    console.log("is it here!");
+    let clickedChild = event.target.closest(".child");
+    if (clickedChild) {
+      console.log("is it here too");
+      //Accessing title and author from the clicked child element
+      let title = clickedChild.querySelector(".tittle").innerText;
+      let author = clickedChild.querySelector(".author").innerText;
+      //Printing the title, author, and book name (assuming book name is the same as title)
+      console.log(`Title: ${title}`);
+      console.log(`Author: ${author}`);
+      console.log(`Book Name: ${title}`);
+    }
+  });
 
   //logout
   function logout() {
