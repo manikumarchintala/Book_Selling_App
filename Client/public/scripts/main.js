@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
   let username = localStorage.getItem("username");
   let password = localStorage.getItem("password");
-
   const jwt = localStorage.getItem("jwt");
   if (jwt == null || username == null || password == null) {
     window.location.href = "./login.html";
   }
-
   //setting logout function
   let logoutbutton = document.getElementById("logout");
   logoutbutton.addEventListener("click", logout);
@@ -19,15 +17,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   //functionality to display the username
   let userdisplay = document.querySelector(".user");
   userdisplay.innerText = username;
-
   //functionality for the checkout view section
-
   let checkout = document.querySelector(".checkoutcart");
   let checkoutgrid = document.querySelector(".checkoutgrid");
   checkout.addEventListener("click", () => {
     checkoutgrid.classList.toggle("visiblecheckout");
   });
-
   //decalaring options to send the data as a headers to the server with get method
   const options = {
     method: "GET",
@@ -76,33 +71,77 @@ document.addEventListener("DOMContentLoaded", async () => {
       subchildtwo.appendChild(tittle);
       subchildtwo.appendChild(brea);
       subchildtwo.appendChild(author);
+      //creating sub child three for the hidden details
+      let subchildthree = document.createElement("div");
+      subchildthree.setAttribute("class", "subchildthree");
+      //creating span for the discreption;
+      let discreption = document.createElement("span");
+      discreption.setAttribute("class", "discription");
+      discreption.innerText = `${element.descreption}`;
+      //creating id for the push to the cart
+      let id = document.createElement("span");
+      id.setAttribute("class", "id");
+      id.innerText = `${element._id}`;
+      //creating genere for the books
+      let genre = document.createElement("span");
+      genre.setAttribute("class", "genre");
+      genre.innerText = `${element.genre}`;
+      //  creating price
+      let price = document.createElement("span");
+      price.setAttribute("class", "price");
+      price.innerText = `${element.price}`;
+      //appending indvidual elements into the subchild three
+      subchildthree.appendChild(discreption);
+      subchildthree.appendChild(id);
+      subchildthree.appendChild(genre);
+      subchildthree.appendChild(price);
       //appened both subchildren to the main child element
       child.appendChild(subchildone);
       child.appendChild(subchildtwo);
+      child.appendChild(subchildthree);
       //append the child for the grid container
       gridcontainer.appendChild(child);
     });
-    // saving in the dummy variable for further use
   } catch (error) {
     console.error("error:", error);
   }
-
+  //using event delegation on the gridcontainer.
   gridcontainer.addEventListener("click", function (event) {
     // Check if the clicked element has the class "child"
-    console.log("is it here!");
     let clickedChild = event.target.closest(".child");
     if (clickedChild) {
-      console.log("is it here too");
       //Accessing title and author from the clicked child element
       let title = clickedChild.querySelector(".tittle").innerText;
       let author = clickedChild.querySelector(".author").innerText;
+      let discription = clickedChild.querySelector(".discription").innerText;
+      let genre = clickedChild.querySelector(".genre").innerText;
+      let price = clickedChild.querySelector(".price").innerText;
+      let image = clickedChild.querySelector("img").getAttribute("src");
+      let id = clickedChild.querySelector(".id").innerText;
       //Printing the title, author, and book name (assuming book name is the same as title)
-      console.log(`Title: ${title}`);
       console.log(`Author: ${author}`);
       console.log(`Book Name: ${title}`);
+      console.log(`Genre: ${genre}`);
+      console.log(`discreption:${discription}`);
+      console.log(`Price:${price}`);
+      console.log(`url:${image}`);
+      console.log(`id:${id}`);
+      let popup = document.querySelector(".popup");
+
+      let displaypicture = document.createElement("img");
+      displaypicture.setAttribute("src", `${image}`);
+      let displaydescription = document.createElement("span");
+      displaydescription.setAttribute("class", "displaydescription");
+      displaydescription.innerText = discription;
+      let displaytittle = document.createElement("span");
+      displaytittle.setAttribute("class", "displaytittle");
+      displaytittle.innerText = title;
+
+      popup.appendChild(displaypicture);
+      popup.appendChild(displaytittle);
+      popup.appendChild(displaydescription);
     }
   });
-
   //logout
   function logout() {
     localStorage.removeItem("jwt");
@@ -110,6 +149,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("password");
     window.location.href = "./login.html";
   }
-
   //dont mess this
 });
