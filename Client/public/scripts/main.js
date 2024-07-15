@@ -20,8 +20,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   //functionality for the checkout view section
   let checkout = document.querySelector(".checkoutcart");
   let checkoutgrid = document.querySelector(".checkoutgrid");
-  checkout.addEventListener("click", () => {
+  checkout.addEventListener("click", async () => {
     checkoutgrid.classList.toggle("visiblecheckout");
+    const cartitems = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        username: username,
+        password: password,
+      },
+    };
+
+    try {
+      let response = await fetch(
+        "http://127.0.0.1:3000/api/user/Addedbooks",
+        cartitems
+      );
+      if (!response.ok) {
+        throw Error(`Httperror`);
+      }
+      let body = await response.json();
+      let { items } = body;
+      console.log("mani");
+    } catch (error) {
+      console.error(error);
+    }
   });
   //decalaring options to send the data as a headers to the server with get method
   const options = {
@@ -65,11 +88,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       let author = document.createElement("span");
       author.setAttribute("class", "author");
       author.innerText = `${element.author}`;
-      //creating a break element
-      let brea = document.createElement("br");
       //append the title for and author to the second subchild and br
       subchildtwo.appendChild(tittle);
-      subchildtwo.appendChild(brea);
+      subchildtwo.appendChild(document.createElement("br"));
       subchildtwo.appendChild(author);
       //creating sub child three for the hidden details
       let subchildthree = document.createElement("div");
@@ -126,20 +147,68 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log(`Price:${price}`);
       console.log(`url:${image}`);
       console.log(`id:${id}`);
+      //Getting the element from Html
       let popup = document.querySelector(".popup");
-
+      //creating display and adding image to the display.
+      let popupdisplay = document.createElement("div");
+      popupdisplay.setAttribute("class", "popupdisplay");
       let displaypicture = document.createElement("img");
       displaypicture.setAttribute("src", `${image}`);
+      displaypicture.setAttribute("alt", `${title}`);
+      popupdisplay.appendChild(displaypicture);
+      //for the middle compartment.
+      let popuptext = document.createElement("div");
+      popupdisplay.setAttribute("class", "popuptext");
+      let displaytittle = document.createElement("span");
+      displaytittle.setAttribute("class", "displaytittle");
+      displaytittle.innerText = `${title}`;
+      let displayid = document.createElement("span");
+      displayid.setAttribute("class", "displayid");
+      displayid.innerText = id;
+      let displaygenre = document.createElement("span");
+      displaygenre.setAttribute("class", "displaygenre");
+      displaygenre.innerText = genre;
+      let displayauthor = document.createElement("span");
+      displayauthor.setAttribute("class", "displayauthor");
+      displayauthor.innerText = author;
       let displaydescription = document.createElement("span");
       displaydescription.setAttribute("class", "displaydescription");
       displaydescription.innerText = discription;
-      let displaytittle = document.createElement("span");
-      displaytittle.setAttribute("class", "displaytittle");
-      displaytittle.innerText = title;
+      let displayprice = document.createElement("span");
+      displayprice.setAttribute("class", "displayprice");
+      displayprice.innerText = `${price}  $`;
+      let cartbutton = document.createElement("button");
+      cartbutton.setAttribute("class", "displaybutton");
+      cartbutton.innerText = "Add to Cart";
+      popuptext.appendChild(displaytittle);
+      popuptext.appendChild(document.createElement("br"));
+      popuptext.appendChild(displayid);
+      popuptext.appendChild(document.createElement("br"));
+      popuptext.appendChild(displaygenre);
+      popuptext.appendChild(document.createElement("br"));
+      popuptext.appendChild(displayauthor);
+      popuptext.appendChild(document.createElement("br"));
+      popuptext.appendChild(displaydescription);
+      popuptext.appendChild(document.createElement("br"));
+      popuptext.appendChild(displayprice);
+      popuptext.appendChild(document.createElement("br"));
+      popuptext.appendChild(cartbutton);
 
-      popup.appendChild(displaypicture);
-      popup.appendChild(displaytittle);
-      popup.appendChild(displaydescription);
+      //creating the button close button.
+      let popupclose = document.createElement("div");
+      popupclose.setAttribute("class", "popupclose");
+      let butn = document.createElement("button");
+      butn.innerText = "X";
+      butn.setAttribute("class", "remove");
+      popupclose.appendChild(butn);
+      popup.appendChild(popupdisplay);
+      popup.appendChild(popuptext);
+      popup.appendChild(popupclose);
+
+      let but = document.querySelector(".remove");
+      but.addEventListener("click", () => {
+        popup.innerHTML = "";
+      });
     }
   });
   //logout

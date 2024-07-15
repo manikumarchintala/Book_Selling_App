@@ -59,7 +59,7 @@ img{
     flex-wrap: nowrap;
     padding: 15px;
 }
-.Login button{
+.Login button , .remove , .displaybutton{
     margin: 5px;
     padding: 10px;
     background-color: white;
@@ -68,7 +68,7 @@ img{
     border-radius: 8px;
     transition: background-color 0.3s,transform 0.3s ;
 }
-.Login button:hover{
+.Login button:hover, .remove:hover , .displaybutton:hover{
     background-color: black;
     color: white;
     transform: scale(1.1); 
@@ -149,16 +149,27 @@ display: none;
     max-width: 100%;
 }
 .popup{
-   
     position: fixed;
-    /* height: 100%; */
-    top: 200px;
+    top: 90px;
     background-color: white;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 2fr 0.1fr;
     gap:5px;
-    padding: 30px 100px ;
-    cursor: pointer;
+    padding: 30px 60px ;
+    line-height: 2.1rem;
+}
+.displaytittle{
+    font-size: 2rem;
+   padding-bottom: 1rem;
+}
+.displayid{
+    font-size: 0.8rem;
+}
+.displaygenre{
+    font-size: 1rem;
+}
+.displayauthor{
+    font-size: 1.3rem;
 }
 footer{
     display: grid;
