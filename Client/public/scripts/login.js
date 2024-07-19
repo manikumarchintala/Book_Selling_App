@@ -3,11 +3,37 @@ document.addEventListener("DOMContentLoaded", () => {
   if (jwt != null) {
     window.location.href = "./main.html";
   }
-  const form = document.getElementById("form");
+
+  // Elements for login and registration forms
+  let regDisplay = document.getElementById("registrandisplay");
+  let loginDisplay = document.getElementById("logindisplay");
+  let showRegister = document.getElementById("showRegister");
+  let showLogin = document.getElementById("showLogin");
+
+  // Show registration form and hide login form
+  showRegister.addEventListener("click", (event) => {
+    event.preventDefault();
+    loginDisplay.classList.add("hidden");
+    loginDisplay.classList.remove("visible");
+    regDisplay.classList.remove("hidden");
+    regDisplay.classList.add("visible");
+  });
+
+  // Show login form and hide registration form
+  showLogin.addEventListener("click", (event) => {
+    event.preventDefault();
+    regDisplay.classList.add("hidden");
+    regDisplay.classList.remove("visible");
+    loginDisplay.classList.remove("hidden");
+    loginDisplay.classList.add("visible");
+  });
+
+  // Login form submission
+  const form = document.getElementById("loginform");
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const username = document.getElementById("login_username").value;
+    const password = document.getElementById("login_password").value;
     const options = {
       method: "POST",
       headers: {
@@ -22,15 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
         options
       );
       if (!response.ok) {
-        throw new Error(`Httperror`);
+        throw new Error("HTTP error");
       }
       let body = await response.json();
-      // destructuring the books for the inner text
       let { auth, status, message } = body;
-      //   console.log(body);
-      console.log(auth);
-      console.log(status);
-      console.log(message);
 
       if (status === "ok") {
         localStorage.setItem("jwt", auth);
@@ -39,11 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "./main.html";
       } else {
         console.error(message);
-        alert("an error has occured");
+        alert("An error has occurred");
       }
     } catch (error) {
       console.error(error);
     }
   });
 });
-// export default { username, password };

@@ -1,15 +1,16 @@
 :root{
-    --main-yellow:#F8DA7F;
+    --main-yellow:#ffffff;
     --main-black:#263238;
 }
 body{
     padding: 0;
     margin: 0;
+    font-family: "Playwrite AU SA";
 }
 .container{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 0 20px;
+    padding: 110px 20px;
 }
 .secondhalf{
     background-color:var(--main-yellow);
@@ -21,27 +22,50 @@ body{
     align-items: center;
     order: 0;
 }
-input,button{
-    height: 40px;
-    width: 100%;
+label{
+    display: block;
+}
+input{
+    height: 3rem;
+    width: 90%;
     border-radius: 10px;
     margin-bottom: 10px;
     border: 1px solid grey;
 }
+p{
+    font-weight: bold;
+    font-size: 2rem;
+}
+a{
+    text-decoration:underline;
+    color: #263238;
+}
+button{
+    margin: 5px;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s,transform 0.3s ;
+   }
+   button:hover{
+    background-color: black;
+    color: white;
+    transform: scale(1.1); 
+   }
 img{
     max-width: 100%;
 }
-.pages{
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 10px;
-    padding: 10px 20px;
-    border: 1px solid gray;
-    margin: 5px 10px;
-    border-radius: 5px;
+.registrationform{
+    display: none;
 }
-button {
-    height: 15%;
-    width: 20%;
-    border-radius: 5px;
+.visible{
+    display: block;
+}
+.loginform {
+    display: block;
+}
+.hidden {
+    display: none;
 }

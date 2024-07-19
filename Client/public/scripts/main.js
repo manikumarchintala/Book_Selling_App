@@ -63,65 +63,92 @@ document.addEventListener("DOMContentLoaded", async () => {
     let body = await response.json();
     // destructuring the books for the inner text
     let { books } = body;
+
+    // Split the array into two halves
+    const third = Math.ceil(books.length / 3);
+
+    // Divide the array into three parts
+    const firstThird = books.slice(0, third);
+    const secondThird = books.slice(third, 2 * third);
+    const thirdThird = books.slice(2 * third);
+
     //dont mess this up this works totally fine
-    books.forEach((element) => {
+    let renderbooks = (partition) => {
       let gridcontainer = document.getElementById("gridcontainer");
-      //xreating child for the elements of grid
-      let child = document.createElement("div");
-      child.setAttribute("class", "child");
-      //subchild one is for the images
-      let subchildone = document.createElement("div");
-      subchildone.setAttribute("class", "subchildone");
-      //images to display the link
-      let img = document.createElement("img");
-      img.setAttribute("src", `${element.imagelink}`);
-      // append the image
-      subchildone.appendChild(img);
-      //for the secondchild element
-      let subchildtwo = document.createElement("div");
-      subchildtwo.setAttribute("class", "subchildtwo");
-      //creating a span element for the tittle and set its text
-      let tittle = document.createElement("span");
-      tittle.setAttribute("class", "tittle");
-      tittle.innerText = `${element.title}`;
-      //creating a span element for the author and set its text
-      let author = document.createElement("span");
-      author.setAttribute("class", "author");
-      author.innerText = `${element.author}`;
-      //append the title for and author to the second subchild and br
-      subchildtwo.appendChild(tittle);
-      subchildtwo.appendChild(document.createElement("br"));
-      subchildtwo.appendChild(author);
-      //creating sub child three for the hidden details
-      let subchildthree = document.createElement("div");
-      subchildthree.setAttribute("class", "subchildthree");
-      //creating span for the discreption;
-      let discreption = document.createElement("span");
-      discreption.setAttribute("class", "discription");
-      discreption.innerText = `${element.descreption}`;
-      //creating id for the push to the cart
-      let id = document.createElement("span");
-      id.setAttribute("class", "id");
-      id.innerText = `${element._id}`;
-      //creating genere for the books
-      let genre = document.createElement("span");
-      genre.setAttribute("class", "genre");
-      genre.innerText = `${element.genre}`;
-      //  creating price
-      let price = document.createElement("span");
-      price.setAttribute("class", "price");
-      price.innerText = `${element.price}`;
-      //appending indvidual elements into the subchild three
-      subchildthree.appendChild(discreption);
-      subchildthree.appendChild(id);
-      subchildthree.appendChild(genre);
-      subchildthree.appendChild(price);
-      //appened both subchildren to the main child element
-      child.appendChild(subchildone);
-      child.appendChild(subchildtwo);
-      child.appendChild(subchildthree);
-      //append the child for the grid container
-      gridcontainer.appendChild(child);
+      gridcontainer.innerHTML = "";
+      partition.forEach((element) => {
+        //xreating child for the elements of grid
+        let child = document.createElement("div");
+        child.setAttribute("class", "child");
+        //subchild one is for the images
+        let subchildone = document.createElement("div");
+        subchildone.setAttribute("class", "subchildone");
+        //images to display the link
+        let img = document.createElement("img");
+        img.setAttribute("src", `${element.imagelink}`);
+        // append the image
+        subchildone.appendChild(img);
+        //for the secondchild element
+        let subchildtwo = document.createElement("div");
+        subchildtwo.setAttribute("class", "subchildtwo");
+        //creating a span element for the tittle and set its text
+        let tittle = document.createElement("span");
+        tittle.setAttribute("class", "tittle");
+        tittle.innerText = `${element.title}`;
+        //creating a span element for the author and set its text
+        let author = document.createElement("span");
+        author.setAttribute("class", "author");
+        author.innerText = `${element.author}`;
+        //append the title for and author to the second subchild and br
+        subchildtwo.appendChild(tittle);
+        subchildtwo.appendChild(document.createElement("br"));
+        subchildtwo.appendChild(author);
+        //creating sub child three for the hidden details
+        let subchildthree = document.createElement("div");
+        subchildthree.setAttribute("class", "subchildthree");
+        //creating span for the discreption;
+        let discreption = document.createElement("span");
+        discreption.setAttribute("class", "discription");
+        discreption.innerText = `${element.descreption}`;
+        //creating id for the push to the cart
+        let id = document.createElement("span");
+        id.setAttribute("class", "id");
+        id.innerText = `${element._id}`;
+        //creating genere for the books
+        let genre = document.createElement("span");
+        genre.setAttribute("class", "genre");
+        genre.innerText = `${element.genre}`;
+        //  creating price
+        let price = document.createElement("span");
+        price.setAttribute("class", "price");
+        price.innerText = `${element.price}`;
+        //appending indvidual elements into the subchild three
+        subchildthree.appendChild(discreption);
+        subchildthree.appendChild(id);
+        subchildthree.appendChild(genre);
+        subchildthree.appendChild(price);
+        //appened both subchildren to the main child element
+        child.appendChild(subchildone);
+        child.appendChild(subchildtwo);
+        child.appendChild(subchildthree);
+        //append the child for the grid container
+        gridcontainer.appendChild(child);
+      });
+    };
+    renderbooks(firstThird);
+    let firstThirdButton = document.getElementById("firstHalf");
+    let secondThrirdButton = document.getElementById("secondHalf");
+    let thirdThirdButton = document.getElementById("thirdHalf");
+
+    firstThirdButton.addEventListener("click", () => {
+      renderbooks(firstThird);
+    });
+
+    secondThrirdButton.addEventListener("click", () => {
+      renderbooks(secondThird);
+    });
+    thirdThirdButton.addEventListener("click", () => {
+      renderbooks(thirdThird);
     });
   } catch (error) {
     console.error("error:", error);
@@ -130,35 +157,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   gridcontainer.addEventListener("click", function (event) {
     // Check if the clicked element has the class "child"
     let clickedChild = event.target.closest(".child");
+
     if (clickedChild) {
-      //Accessing title and author from the clicked child element
+      // Getting the elements from HTML
+      let popup = document.querySelector(".popup");
+      let backdrop = document.querySelector(".backdrop");
+
+      popup.innerHTML = ""; // Clear previous popup content
+      popup.classList.remove("Hide");
+      backdrop.classList.remove("Hide");
+
+      // Accessing title and author from the clicked child element
       let title = clickedChild.querySelector(".tittle").innerText;
       let author = clickedChild.querySelector(".author").innerText;
-      let discription = clickedChild.querySelector(".discription").innerText;
+      let description = clickedChild.querySelector(".discription").innerText;
       let genre = clickedChild.querySelector(".genre").innerText;
       let price = clickedChild.querySelector(".price").innerText;
       let image = clickedChild.querySelector("img").getAttribute("src");
       let id = clickedChild.querySelector(".id").innerText;
-      //Printing the title, author, and book name (assuming book name is the same as title)
-      console.log(`Author: ${author}`);
-      console.log(`Book Name: ${title}`);
-      console.log(`Genre: ${genre}`);
-      console.log(`discreption:${discription}`);
-      console.log(`Price:${price}`);
-      console.log(`url:${image}`);
-      console.log(`id:${id}`);
-      //Getting the element from Html
-      let popup = document.querySelector(".popup");
-      //creating display and adding image to the display.
+
+      // Creating display and adding image to the display
       let popupdisplay = document.createElement("div");
       popupdisplay.setAttribute("class", "popupdisplay");
       let displaypicture = document.createElement("img");
       displaypicture.setAttribute("src", `${image}`);
       displaypicture.setAttribute("alt", `${title}`);
       popupdisplay.appendChild(displaypicture);
-      //for the middle compartment.
+
+      // For the middle compartment
       let popuptext = document.createElement("div");
-      popupdisplay.setAttribute("class", "popuptext");
+      popuptext.setAttribute("class", "popuptext");
       let displaytittle = document.createElement("span");
       displaytittle.setAttribute("class", "displaytittle");
       displaytittle.innerText = `${title}`;
@@ -173,13 +201,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       displayauthor.innerText = author;
       let displaydescription = document.createElement("span");
       displaydescription.setAttribute("class", "displaydescription");
-      displaydescription.innerText = discription;
+      displaydescription.innerText = description;
       let displayprice = document.createElement("span");
       displayprice.setAttribute("class", "displayprice");
-      displayprice.innerText = `${price}  $`;
+      displayprice.innerText = `${price} $`;
       let cartbutton = document.createElement("button");
       cartbutton.setAttribute("class", "displaybutton");
       cartbutton.innerText = "Add to Cart";
+
       popuptext.appendChild(displaytittle);
       popuptext.appendChild(document.createElement("br"));
       popuptext.appendChild(displayid);
@@ -194,23 +223,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       popuptext.appendChild(document.createElement("br"));
       popuptext.appendChild(cartbutton);
 
-      //creating the button close button.
+      // Creating the close button
       let popupclose = document.createElement("div");
       popupclose.setAttribute("class", "popupclose");
-      let butn = document.createElement("button");
-      butn.innerText = "X";
-      butn.setAttribute("class", "remove");
-      popupclose.appendChild(butn);
+      let closeButton = document.createElement("button");
+      closeButton.innerText = "X";
+      closeButton.setAttribute("class", "remove");
+      popupclose.appendChild(closeButton);
+
       popup.appendChild(popupdisplay);
       popup.appendChild(popuptext);
       popup.appendChild(popupclose);
 
-      let but = document.querySelector(".remove");
-      but.addEventListener("click", () => {
-        popup.innerHTML = "";
+      // Event listener for the close button
+      let removeButton = document.querySelector(".remove");
+      removeButton.addEventListener("click", () => {
+        popup.classList.add("Hide");
+        backdrop.classList.add("Hide");
+        popup.innerHTML = ""; // Clear popup content when closing
       });
     }
   });
+
   //logout
   function logout() {
     localStorage.removeItem("jwt");

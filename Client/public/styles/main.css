@@ -59,7 +59,7 @@ img{
     flex-wrap: nowrap;
     padding: 15px;
 }
-.Login button , .remove , .displaybutton{
+button , .remove , .displaybutton{
     margin: 5px;
     padding: 10px;
     background-color: white;
@@ -68,7 +68,7 @@ img{
     border-radius: 8px;
     transition: background-color 0.3s,transform 0.3s ;
 }
-.Login button:hover, .remove:hover , .displaybutton:hover{
+button:hover, .remove:hover , .displaybutton:hover{
     background-color: black;
     color: white;
     transform: scale(1.1); 
@@ -104,19 +104,20 @@ display: none;
 }
 .maingrid{
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr;
+    /* padding: 0px 50px; */
 }
-.sidegrid{
+/* .sidegrid{
     border: 0.5px solid black;
     padding: 5px 10px;
     margin: 10px 10px;
     grid-row: 1/3;
-}
+} */
 .gridcontainer{
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5,1fr);
     gap: 30px 20px;
-    padding: 5px 10px;
+    padding: 50px 100px;
     margin: 10px 10px;
     border: 0.5px solid black;
     grid-column: 2/3;
@@ -154,9 +155,12 @@ display: none;
     background-color: white;
     display: grid;
     grid-template-columns: 1fr 2fr 0.1fr;
-    gap:5px;
+    gap:35px;
     padding: 30px 60px ;
     line-height: 2.1rem;
+}
+ .Hide{
+    display: none;
 }
 .displaytittle{
     font-size: 2rem;
@@ -170,6 +174,12 @@ display: none;
 }
 .displayauthor{
     font-size: 1.3rem;
+}
+.navigator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
 footer{
     display: grid;
